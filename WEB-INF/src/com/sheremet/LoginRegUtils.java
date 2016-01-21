@@ -83,7 +83,7 @@ public class LoginRegUtils {
 		//		System.out.println(registerQuery);
 	}
 	public boolean delete(String login) {
-		System.out.println("REGISTER: login="+ login);
+		System.out.println("DELETE: login="+ login);
 		try {
 			String delQuery = "delete from "+ table+" where login='"+login.replaceAll("'", "")+"'";
 			System.err.println(delQuery);
