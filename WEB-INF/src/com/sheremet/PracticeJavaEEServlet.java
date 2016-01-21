@@ -11,6 +11,7 @@ public class PracticeJavaEEServlet extends HttpServlet {
 	private static LoginRegUtils utils = new LoginRegUtils();
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
+		System.out.println("POST:\nip="+req.getRemoteAddr()+";\nq: "+req.getQueryString()+"; p: "+req.getServletPath());
 		try{
 			String acc = checkCookie(req.getCookies());
 			String act = req.getParameter("act");
@@ -61,6 +62,7 @@ public class PracticeJavaEEServlet extends HttpServlet {
 	}
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		System.out.println("GET:\nip="+req.getRemoteAddr()+";\nq: "+req.getQueryString()+"; p: "+req.getServletPath());
 		String act =req.getParameter("act");
 		if (act!=null&&act.equalsIgnoreCase("logout")){
 			Cookie delete = new Cookie("token", "deleted");

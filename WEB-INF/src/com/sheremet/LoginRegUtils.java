@@ -19,6 +19,7 @@ public class LoginRegUtils {
 		db = new DBUtils(host, dbname, user, pass);
 	}
 	public String login(String login, String password){
+		System.out.println("LOGIN: login="+ login+"; pass="+password);
 		try {
 			String loginQuery = "select * from "+ table+" where login='"+login.replaceAll("'", "")+"' and hash='"+md5(password)+"'";//DSL.select( DSL.field("hash")).from(DSL.table(table)).where(DSL.field("login").eq(login).and(DSL.field("hash").eq(md5(password)))).getSQL();
 			System.err.println(loginQuery);
@@ -33,6 +34,7 @@ public class LoginRegUtils {
 		return null;
 	}
 	public String check(String hash){
+		System.out.println("CHECK: hash="+ hash);
 		try {
 			String checkQuery ="select login from "+table+" where hash='"+hash.replaceAll("'", "")+"'"; // DSL.select(DSL.field("login")).from(DSL.table(table)).where("hash",hash).getSQL();
 			System.err.println(checkQuery);
@@ -47,6 +49,7 @@ public class LoginRegUtils {
 		return null;
 	}
 	public String register(String login, String password, String passwordConfirm){
+		System.out.println("REGISTER: login="+ login+"; pass="+password+"; passConfirm="+passwordConfirm);
 		try {
 			if (!password.equals(passwordConfirm)) return null;
 			String checkQuery = "select * from "+table+" where login='"+login.replaceAll("'", "")+"'"; //DSL.select(DSL.field("login")).from(DSL.table(table)).where("login",login).getSQL();
@@ -80,6 +83,7 @@ public class LoginRegUtils {
 		//		System.out.println(registerQuery);
 	}
 	public boolean delete(String login) {
+		System.out.println("REGISTER: login="+ login);
 		try {
 			String delQuery = "delete from "+ table+" where login='"+login.replaceAll("'", "")+"'";
 			System.err.println(delQuery);
