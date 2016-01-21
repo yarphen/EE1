@@ -58,10 +58,8 @@ public class LoginRegUtils {
 			}
 			String registerQuery ="insert into "+table+" values('"+login.replaceAll("'", "")+"','"+md5(password) +"')";//+ DSL.insertInto(DSL.table(table)).columns(DSL.field("login"), DSL.field("hash")).values("login", md5(password)).getSQL();
 			System.err.println(registerQuery);
-			if (db.execute(registerQuery))
-				return md5(password);
-			else 
-				return null;
+			db.execute(registerQuery);
+			return md5(password);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -78,14 +76,15 @@ public class LoginRegUtils {
 		return DatatypeConverter.printHexBinary(m.digest());
 	}
 	public static void main(String[] args) {
-//		String registerQuery=DSL.insertInto(DSL.table(table)).set(DSL.field("login"), "login").set(DSL.field("hash"), "789").getSQL();
-//		System.out.println(registerQuery);
+		//		String registerQuery=DSL.insertInto(DSL.table(table)).set(DSL.field("login"), "login").set(DSL.field("hash"), "789").getSQL();
+		//		System.out.println(registerQuery);
 	}
 	public boolean delete(String login) {
 		try {
 			String delQuery = "delete from "+ table+" where login='"+login.replaceAll("'", "")+"'";
 			System.err.println(delQuery);
-			return db.execute(delQuery);
+			db.execute(delQuery);
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

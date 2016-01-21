@@ -24,8 +24,8 @@ public class DBUtils {
 		st.executeQuery(query);
 		return st.getResultSet();
 	}
-	public boolean execute(String query) throws SQLException {
+	public void execute(String query) throws SQLException {
 		Statement st = connection.createStatement();
-		return st.execute(query);
+		st.execute(query);
 	}
 }
