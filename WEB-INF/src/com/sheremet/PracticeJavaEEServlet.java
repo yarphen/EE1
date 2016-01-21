@@ -8,23 +8,30 @@ import javax.servlet.http.*;
 
 @SuppressWarnings("serial")
 public class PracticeJavaEEServlet extends HttpServlet {
+	private static LoginRegUtils utils = new LoginRegUtils();
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		try{
-			if (checkCookie(req.getCookies())!=null){
-				return;
-			}
+			String acc = checkCookie(req.getCookies());
 			String act = req.getParameter("act");
 			String login = req.getParameter("login");
 			String pass = req.getParameter("pass");
 			String pass_rep = req.getParameter("pass_rep");
 			if (act!=null){
-				LoginRegUtils utils = new LoginRegUtils();
 				if (act.equalsIgnoreCase("REGISTER")){
 					if (login!=null&&pass!=null&&pass_rep!=null){
 						String hash = utils.register(login, pass, pass_rep);
 						if (hash!=null)
 							resp.addCookie(new Cookie("token", hash));
+					}
+				}
+				if (act.equalsIgnoreCase("DELETE")){
+					if (acc!=null){
+						if(utils.delete(acc)){
+							Cookie delete = new Cookie("token", "deleted");
+							delete.setMaxAge(0);
+							resp.addCookie(delete); 
+						}
 					}
 				}
 				if (act.equalsIgnoreCase("LOGIN")){
@@ -41,13 +48,15 @@ public class PracticeJavaEEServlet extends HttpServlet {
 		}
 	}
 	private String checkCookie(Cookie[] cookies) {
-		LoginRegUtils utils = new LoginRegUtils();
+
 		if (cookies==null)return null;
-		for(Cookie c: cookies){
-			if (c.getName().equals("token")){
-				return utils.check(c.getValue());
+		try{
+			for(Cookie c: cookies){
+				if (c.getName().equals("token")){
+					return utils.check(c.getValue());
+				}
 			}
-		}
+		}catch(NullPointerException e){}
 		return null;
 	}
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -65,9 +74,12 @@ public class PracticeJavaEEServlet extends HttpServlet {
 			resp.sendRedirect("/EE1/login.html");
 			return;
 		}
-		resp.getWriter().println("<html><body>");
-		resp.getWriter().println("Hello, "+login+"!");
-		resp.getWriter().println("<br><a href='do?act=logout'>LOGOUT</a>");
+		resp.getWriter().println("<html><head><title>"+login+"</title><style>body{font-family: Tahoma;} .outer {width: 100%;text-align: center;} \r\n inner {display: inline-block;}</style></head><body>");
+		resp.getWriter().println("<div class='outer'><div class='inner'><h1>Hello, "+login+"!</h1><br>");
+		resp.getWriter().println("<h3>You can</h3><br>");
+		resp.getWriter().println("<a href='do?act=logout'>LOGOUT</a>");
+		resp.getWriter().println("<br><br>");
+		resp.getWriter().println("<form action='do?act=delete' method='post'><input type='submit' value='DELETE ACCOUNT'></form></div></div>");
 		resp.getWriter().println("</body></html>");
 	}
 }

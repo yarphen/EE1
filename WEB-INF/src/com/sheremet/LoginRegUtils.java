@@ -81,4 +81,14 @@ public class LoginRegUtils {
 //		String registerQuery=DSL.insertInto(DSL.table(table)).set(DSL.field("login"), "login").set(DSL.field("hash"), "789").getSQL();
 //		System.out.println(registerQuery);
 	}
+	public boolean delete(String login) {
+		try {
+			String delQuery = "delete from "+ table+" where login='"+login.replaceAll("'", "")+"'";
+			System.err.println(delQuery);
+			return db.execute(delQuery);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

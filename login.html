@@ -1,33 +1,52 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <!-- The HTML 4.01 Transitional DOCTYPE declaration-->
 <!-- above set at the top of the file will set     -->
 <!-- the browser's rendering engine into           -->
 <!-- "Quirks Mode". Replacing this declaration     -->
 <!-- with a "Standards Mode" doctype is supported, -->
 <!-- but may lead to some differences in layout.   -->
-
-<html>
-  <head>
+<html><head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>Hello, user!</title>
+  <style>
+  body{
+    font-family: Tahoma;
+  }
+  .outer {
+  width: 100%;
+  text-align: center;
+}
+
+.inner {
+  display: inline-block;
+}
+  </style>
   </head>
 
   <body>
+      <div class="outer"><div class="inner">
+            
     <h1>Hello user, please login or register!</h1>
-	
-    <table>
-      <tr>
-        <td><form method="post" action="do?act=login">
-        <input type="text" name="login" />
-        <input type="password" name="pass" />
-        <input type="submit" value="LOGIN" />
-        </form></td><td><form method="post" action="do?act=register">
-        <input type="text" name="login" />
-        <input type="password" name="pass" />
-        <input type="password" name="pass_rep" />
-        <input type="submit" value="REGISTER" />
-        </form></td>       
-      </tr>
-    </table>
-  </body>
-</html>
+      <h3>Log in:</h3>
+	<div><form method="post" action="do?act=login">
+      LOGIN:<br>
+        <input name="login" type="text">
+  <br>
+      PASSWORD:<br>
+        <input name="pass" type="password">
+  <br>
+        <input value="LOGIN" type="submit">
+    </form></div>
+      <h3>Register:</h3>
+  <div><form method="post" action="do?act=register">
+  LOGIN:<br>
+        <input name="login" type="text"><br>
+  PASSWORD:<br>
+        <input name="pass" type="password"><br>
+  PASSWORD CONFIRM:<br>
+        <input name="pass_rep" type="password"><br>
+        <input value="REGISTER" type="submit">
+    </form></div>
+  
+      </div></div>
+</body></html>
